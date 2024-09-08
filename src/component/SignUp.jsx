@@ -21,7 +21,7 @@ function SignUp() {
     console.log(data);
 
     axios
-      .post("http://localhost:8080/signup", {
+      .post("http://localhost:8080/auth/signup", {
         name: data.name,
         email: data.email,
         username: data.username,
@@ -31,7 +31,7 @@ function SignUp() {
         console.log(res);
         if (res.status === 201) {
           toast.success("User sign up successfully");
-          navigate("/signIn");
+          navigate("/signin");
           setSignedUp(true);
           console.log("signup successfully");
         }
@@ -47,19 +47,19 @@ function SignUp() {
 
   return (
     <>
-      <div className="max-w-md mx-auto my-56 items-center flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 border-2">
+      <div className="max-w-lg mx-auto my-20 items-center rounded-xl bg-slate-50 flex min-h-full flex-1 flex-col justify-center px-6 py-5 lg:px-8 border-2">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
           <img alt="Your Company" src={logo} className="mx-auto h-10 w-auto" />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Signup here
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             action="#"
             method="POST"
-            className="space-y-6"
+            className="space-y-3"
             onSubmit={handleSubmit(onSubmit)}
           >
             <div>
@@ -185,8 +185,8 @@ function SignUp() {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
-            <Link to="/signIn">Sign In</Link>
+          <p className="mt-5 text-center text-md text-gray-950">
+            <Link to="/signin">Sign In</Link>
           </p>
         </div>
       </div>
