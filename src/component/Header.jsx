@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import profileIcon  from "../assets/profile-icon.png";
 import profileIcon  from "../assets/profile-icon1.png";
 import logo from "../assets/logo.png";
@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 function Header() {
+  const [click,setClick]=useState(false)
   return (
      <nav style={{backgroundColor:"#cbd5e1"}}>
   <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -54,7 +55,8 @@ function Header() {
         </div>
       </div>
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+        <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+       >
           <span className="absolute -inset-1.5"></span>
           <span className="sr-only">View notifications</span>
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -65,7 +67,7 @@ function Header() {
         {/* <!-- Profile dropdown --> */}
         <div className="relative ml-3">
           <div>
-            <button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+            <button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true" onClick={()=>{setClick(!click)}}>
               <span className="absolute -inset-1.5"></span>
               <span className="sr-only">Open user menu</span>
               <img className="h-8 w-8 rounded-full" src={profileIcon} alt=""/>
@@ -82,12 +84,12 @@ function Header() {
               From: "transform opacity-100 scale-100"
               To: "transform opacity-0 scale-95"
           --> */}
-          <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
+      {click?    <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
             {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
             <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</Link>
             <Link to="/setting"  className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-1">Settings</Link>
             <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</a>
-          </div>
+          </div>:""}
         </div>
       </div>
     </div>

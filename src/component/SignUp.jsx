@@ -22,7 +22,8 @@ function SignUp() {
 
     axios
       .post("http://localhost:8080/auth/signup", {
-        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
         email: data.email,
         username: data.username,
         password: data.password,
@@ -38,9 +39,13 @@ function SignUp() {
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          toast.error("Email aready exists.Please use a different email");
+          toast.error(err.response.data);
         } else {
-          console.log(err);
+          if (err.response.data.includes("duplicate key error")) {
+            toast.error("User already exist");
+          } else {
+            console.log(err);
+          }
         }
       });
   };
@@ -64,21 +69,46 @@ function SignUp() {
           >
             <div>
               <label
-                htmlFor="name"
+                htmlFor="firstName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Name
+                First Name
               </label>
               <div className="mt-2">
                 <input
-                  id="name"
-                  name="name"
+                  id="firstName"
+                  name="firstName"
                   type="name"
                   required
-                  autoComplete="name"
+                  autoComplete="firstName"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  {...register("name", { required: "Please enter your name" })}
+                  {...register("firstName", { required: "*Please enter your name" })}
                 />
+                <p className="text-red-600">
+                  {errors.firstName && <p>{errors.firstName?.message}</p>}
+                </p>
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="lastName"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+               Last Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="name"
+                  required
+                  autoComplete="namlastNamee"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register("lastName", { required: "*Please enter your name" })}
+                />
+                <p className="text-red-600">
+                  {errors.lastName && <p>{errors.lastName?.message}</p>}
+                </p>
               </div>
             </div>
 
@@ -93,12 +123,18 @@ function SignUp() {
                 <input
                   id="email"
                   name="email"
-                  type="email"
-                  required
                   autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  {...register("email", { required: true })}
+                  {...register("email", {
+                    required: "Please Enter Your Email!",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "*Please enter valid email",
+                    },
+                  })}
+                  type:email
                 />
+                <p className="text-red-600">{errors.email?.message}</p>
               </div>
             </div>
 
@@ -119,6 +155,9 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register("username", { required: true })}
                 />
+                <p className="text-red-600">
+                  {errors.username && errors.username.message}
+                </p>
               </div>
             </div>
 
@@ -139,8 +178,15 @@ function SignUp() {
                   required
                   autoComplete="current-password"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: "*Please Enter Your Password",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters long!",
+                    },
+                  })}
                 />
+                <p className="text-red-600">{errors.password?.message}</p>
               </div>
 
               <div className="flex col-6 items-center justify-between">
@@ -163,15 +209,14 @@ function SignUp() {
                     required: true,
                     validate: (val) => {
                       const { password } = getValues();
-                      return password === val || "password should match";
+                      return password === val || "*Password should match";
                     },
                   })}
                 />
 
                 <p className="text-red-600">
-                  *{errors.ConfirmPassword && errors.ConfirmPassword.message}
+                  {errors.ConfirmPassword && errors.ConfirmPassword.message}
                 </p>
-                {/* {console.log(errors.ConfirmPassword.message)} */}
               </div>
             </div>
 

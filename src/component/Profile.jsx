@@ -10,26 +10,25 @@ function Profile() {
 
   useEffect(() => {
     let token_value = sessionStorage.getItem("token");
-    console.log(token_value);
     
     if (token_value) {
       axios
-        .get("http://localhost:8080/auth/verify-token", null, {
+        .get("http://localhost:8080/auth/verify-token", {
           headers: {
             token: token_value,
           },
         })
         .then((res) => {
           console.log(res.data);
-          console.log(token_value);
         })
-        // if (token) {
-        //   toast.success("you are aurthorize");
-        // }
+       
         .catch((error) => {
           console.log(error);
-          if (error.response.data.status==="Unauthorized") {
+          console.log(error.response.data);
+          
+          if (error.response.data==="Unauthorized") {
             toast.error("Login session has expired,please try to login.");
+            sessionStorage.removeItem("token");
             navigate("/signin");
           }
         });
