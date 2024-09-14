@@ -11,9 +11,10 @@ function SignIn() {
   const { logIn, logOut, logedInUser, isUserLogedIn, setIsUserLogedIn } =
     useContext(LoginContext);
   const { register, resetField, reset, handleSubmit } = useForm();
-
+{console.log(setIsUserLogedIn);
+}
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     if (data.username && data.password) {
       axios
         .post("http://localhost:8080/auth/login", {
@@ -35,8 +36,11 @@ function SignIn() {
             toast.error(err.response.data);
           }
           
-          else if (err.response.data.status === 401)
+          else if (err.response.data.status === 401){
+            setIsUserLogedIn(false);
             toast.error(err.response.data);
+
+          }
 
           else 
             toast.error("failed to login");

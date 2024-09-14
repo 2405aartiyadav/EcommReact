@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AccountSettingInput from "./AccountSettingInput";
-import { useForm } from "react-hook-form";
+import { LoginContext } from "../Context/LoginContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Setting() {
-  const {
-    register,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { logIn, logedInUser, setIsUserLogedIn } = useContext(LoginContext);
+  {
+    console.log("logedInUser" + logedInUser);
+  }
+  const [formData, setFormData] = useState();
+  const[isLoggIn,setIsLoggIn]=useState(false)
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -28,9 +31,31 @@ function Setting() {
     securityQuestion2: "",
     securityAns2: "",
   });
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+
+  
+    useEffect(() => {
+      if (setIsUserLogedIn) {
+        setIsLoggIn(true);
+      axios
+        .post("http://localhost:8080/auth/user-detail", {
+          username: logedInUser,
+        })
+        .then((response) => {
+          setUserData(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      else {
+        setIsLoggIn(false);
+        setUserData(" ");
+        toast.error("Please login");
+        
+      }
+    } , []);
+ 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -58,26 +83,17 @@ function Setting() {
       securityQuestion2,
       securityAns2,
     } = userData;
-    console.log("data", {
-      username,
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      gender,
-      dob,
-      newPasswd,
-      confirmPasswd,
-      address,
-      country,
-      state,
-      city,
-      zipCode,
-      securityQuestion1,
-      securityAns1,
-      securityQuestion2,
-      securityAns2
-    });
+    axios.post("http://localhost:8080/auth/update-user-detail",userData)
+    .then((response)=>{
+      console.log(response.data);
+      toast.success("User detail updated")
+      
+    })
+    .catch((error)=>{
+      console.log(error);
+      toast.error("Something went wrong")
+      
+    })
   };
   return (
     <div id="setting">
@@ -101,6 +117,7 @@ function Setting() {
                 type="text"
                 value={userData.firstName}
                 handleInputChange={handleInputChange}
+                readOnly
               />
               <AccountSettingInput
                 label="Lastt Name"
@@ -109,6 +126,7 @@ function Setting() {
                 type="text"
                 value={userData.lastName}
                 handleInputChange={handleInputChange}
+                readOnly
               />
               <AccountSettingInput
                 label="Username"
@@ -117,6 +135,7 @@ function Setting() {
                 type="text"
                 value={userData.username}
                 handleInputChange={handleInputChange}
+                readOnly
               />
             </div>
 
@@ -128,6 +147,7 @@ function Setting() {
                 type="email"
                 value={userData.email}
                 handleInputChange={handleInputChange}
+                readOnly
               />
 
               <AccountSettingInput
@@ -179,7 +199,7 @@ function Setting() {
                 id="dob"
                 name="dob"
                 type="date"
-                value={userData.dob}
+                value={userData.dob.slice(0, 10)}
                 handleInputChange={handleInputChange}
               />
             </div>
@@ -275,7 +295,9 @@ function Setting() {
 
           {/* Security question */}
           <hr className="text-black" />
-          <h2 className="p-3 mt-3 text-gray-550 font-bold">Set Your Security Question</h2>
+          <h2 className="p-3 mt-3 text-gray-550 font-bold">
+            Set Your Security Question
+          </h2>
 
           {/* Security question1 */}
 

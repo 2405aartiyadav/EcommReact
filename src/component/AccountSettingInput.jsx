@@ -8,6 +8,7 @@ function AccountSettingInput({
   name,
   value,
   handleInputChange,
+  readOnly
 }) {
   const {
     handleSubmit,
@@ -26,6 +27,7 @@ function AccountSettingInput({
         name={name}
         value={value}
         onChange={handleInputChange}
+        readOnly={readOnly}
         className="block  w-96 p-2 text-gray-500 border border-gray-300 rounded-2xl bg-gray-50 text-base"
       />
     </div>
