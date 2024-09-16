@@ -14,16 +14,34 @@ import ResetPassword from "./component/ResetPassword.jsx";
 import { LoginProvider } from "./Context/LoginContext.jsx";
 import Profile from "./component/Profile.jsx";
 import Setting from "./component/Setting.jsx";
+import Cart from "./component/Cart.jsx";
+import Checkout from "./component/Checkout.jsx";
+import Orders from "./component/Orders.jsx";
+import Products from "./component/Products.jsx";
+import Shop from "./component/Shop.jsx";
+import MainLandingPage from "./component/MainLandingPage.jsx";
+import ContactUs from "./component/ContactUs.jsx";
+import Blog from "./component/Blog.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
+      <Route path="" element={<MainLandingPage />} />
+
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="profile" element={<Profile />} />
       <Route path="setting" element={<Setting />} />
-
+      <Route path="profile" element={<Profile />} />
+      <Route path="cart" element={<Cart />} />
+      <Route path="checkout" element={<Checkout />} />
+      <Route path="orders" element={<Orders />} />
+      <Route path="products" element={<Products />} />
+      <Route path="shop" element={<Shop />} />
       <Route path="reset" element={<ResetPassword/>}/>
+      <Route path="contact" element={<ContactUs/>}/>
+      <Route path="blog" element={<Blog/>}/>
+
     </Route>
   )
 );
