@@ -19,9 +19,9 @@ import Checkout from "./component/Checkout.jsx";
 import Orders from "./component/Orders.jsx";
 import Products from "./component/Products.jsx";
 import Shop from "./component/Shop.jsx";
-import MainLandingPage from "./component/MainLandingPage.jsx";
 import ContactUs from "./component/ContactUs.jsx";
 import Blog from "./component/Blog.jsx";
+import MainLandingPage from "./component/LandingPage/MainLandingPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
