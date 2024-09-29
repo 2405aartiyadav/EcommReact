@@ -1,5 +1,6 @@
 import React from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
   return (
@@ -8,15 +9,15 @@ function ProductCard({ product }) {
         <span className="w-5 bg-slate-800 opacity-80 rounded-lg px-2 text-sm text-white">
           {product.discount}%
         </span>
-        <img src="" alt="" />
+        <img src={product.image} alt="" />
       </div>
       <h2 className="text-sm ">{product.title}</h2>
       <div className="grid grid-cols-2">
-        <p className="text-gray-600 font-bold">
-          ${product.price}
-        </p>
+        <p className="text-gray-600 font-bold">${product.price}</p>
         <button className="ml-auto ">
-          <PlusCircleIcon className="size-8" />
+          <Link to="/productdetail" state={{ productData: product}}>
+            <PlusCircleIcon className="size-8" />
+          </Link>
         </button>
       </div>
     </div>

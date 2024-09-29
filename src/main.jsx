@@ -22,6 +22,7 @@ import Shop from "./component/Shop.jsx";
 import ContactUs from "./component/ContactUs.jsx";
 import Blog from "./component/Blog.jsx";
 import MainLandingPage from "./component/LandingPage/MainLandingPage.jsx";
+import ProductDetails from "./component/Product/ProductDetails.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
       <Route path="reset" element={<ResetPassword/>}/>
       <Route path="contact" element={<ContactUs/>}/>
       <Route path="blog" element={<Blog/>}/>
+      <Route path="productdetail" element={<ProductDetails/>}/>
 
     </Route>
   )

@@ -199,7 +199,7 @@ function Setting() {
                 id="dob"
                 name="dob"
                 type="date"
-                value={userData.dob.slice(0, 10)}
+                value={userData.dob}
                 handleInputChange={handleInputChange}
               />
             </div>

@@ -101,10 +101,11 @@ function Header() {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                {headerNavlinks.map((links) => {
+                {headerNavlinks.map((links,index) => {
                   return (
                     <Link
                       to={links.to}
+                      key={index}
                       className="rounded-md px-3 py-2 text-sm font-medium text-black-400 hover:bg-gray-700 hover:text-white"
                     >
                       {links.item}
