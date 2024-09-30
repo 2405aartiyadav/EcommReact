@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
+import { PrductContextProvider } from "./Context/ProductContext.jsx";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -39,19 +40,19 @@ const router = createBrowserRouter(
       <Route path="orders" element={<Orders />} />
       <Route path="products" element={<Products />} />
       <Route path="shop" element={<Shop />} />
-      <Route path="reset" element={<ResetPassword/>}/>
-      <Route path="contact" element={<ContactUs/>}/>
-      <Route path="blog" element={<Blog/>}/>
-      <Route path="productdetail" element={<ProductDetails/>}/>
-
+      <Route path="reset" element={<ResetPassword />} />
+      <Route path="contact" element={<ContactUs />} />
+      <Route path="blog" element={<Blog />} />
+      <Route path="productdetail" element={<ProductDetails />} />
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <LoginProvider>
-    <RouterProvider router={router} />
+      <PrductContextProvider>
+        <RouterProvider router={router} />
+      </PrductContextProvider>
     </LoginProvider>
-
   </>
 );
