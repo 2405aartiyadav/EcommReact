@@ -18,7 +18,7 @@ function AccountSettingInput({
   } = useForm();
   return (
     <div className="flex-1">
-      <label className="block mb-2 text-sm font-medium text-gray-500dark:text-white">
+      <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
         {label}
       </label>
       <input

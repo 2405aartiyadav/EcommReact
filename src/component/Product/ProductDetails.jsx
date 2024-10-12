@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PrductContext } from "../../Context/ProductContext";
+import toast from "react-hot-toast";
 
 function ProductDetails() {
   const { state } = useLocation();
@@ -8,10 +9,11 @@ function ProductDetails() {
   const data = state.productData;
   const { addItemToCart, selectedItemInCart } = useContext(PrductContext);
 
-const[cartItem,setCartItem]=useState([selectedItemInCart])
+  const [cartItem, setCartItem] = useState([selectedItemInCart]);
   const [productImg, setProductImg] = useState("");
   const [qty, setQty] = useState(0);
   const [productData, setProductData] = useState({
+    id: "",
     title: "",
     images: [],
     discount: "",
@@ -21,6 +23,8 @@ const[cartItem,setCartItem]=useState([selectedItemInCart])
   });
 
   useEffect(() => {
+    console.log(data);
+
     setProductData(data);
     data && data.images && data.images.length > 0
       ? setProductImg(data.images[0])
@@ -37,43 +41,16 @@ const[cartItem,setCartItem]=useState([selectedItemInCart])
       quantity: qty,
       discount: productData.discount,
     };
-    
-    console.log(selectedItemInCart);
 
-    
-    let existingProduct = selectedItemInCart.filter((item) => 
-      (item.title===productData.title));
-
-    if(existingProduct.length<1){
-      addItemToCart(productDetail)
+    if (qty > 0) {
+      addItemToCart(productData.id, productDetail);
+      console.log(selectedItemInCart);
+      navigate("/cart");
+      setQty(0);
+    } else {
+      toast.error("Please select item to add");
     }
-    else{
-      addItemToCart({...productDetail,[productDetail.quantity]:qty})
-
-    }
-
-    console.log(existingProduct.length);
-    
-    
-
-    //   if(item.length>0){
-
-    //   }
-    //   else{
-    //     addItemToCart(productDetail);
-    //   }
-    //   console.log(item);
-
-    //   if (item.title === productData.title) {
-    //     item.quantity++;
-
-    //     return item;
-    //   }
-    // });
-    // if (!obj) {
-    //   addItemToCart(productDetail);
-    // ]}
- }
+  };
 
   return (
     <>
@@ -112,21 +89,19 @@ const[cartItem,setCartItem]=useState([selectedItemInCart])
                 <button
                   className="border-none mr-4"
                   onClick={() => {
-                    setQty(qty - 1);
+                    if (qty > 0) {
+                      setQty(qty - 1);
+                    }
                   }}
                 >
                   -
                 </button>
-                <label className="border-none text-center">
-                  {qty < 0 ? 0 : qty}
-                </label>
+                <label className="border-none text-center">{qty}</label>
                 <button
                   className="ml-4"
                   onClick={() => {
                     setQty(qty + 1);
-                    
                   }}
-                  
                 >
                   +
                 </button>
