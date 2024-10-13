@@ -8,11 +8,12 @@ import {
 import SideBar from "./sidebar/SideBar";
 import axios from "axios";
 function Shop() {
+  const baseUri = import.meta.env.VITE_API_BASE_URL;
   const [productData, setProductData] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/product/get-all-products")
+      .get(`${baseUri}/product/get-all-products`)
       .then((res) => {
         setProductData(res.data);
       })

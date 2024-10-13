@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { LoginContext } from "../Context/LoginContext";
 
 function SignIn() {
+  const baseUri = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const { logIn, logOut, logedInUser, isUserLogedIn, setIsUserLogedIn } =
     useContext(LoginContext);
@@ -17,7 +18,7 @@ function SignIn() {
     // console.log(data);
     if (data.username && data.password) {
       axios
-        .post("http://localhost:8080/auth/login", {
+        .post(`${baseUri}/auth/login`, {
           username: data.username,
           password: data.password,
         })

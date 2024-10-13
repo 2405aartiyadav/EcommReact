@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 function Profile() {
+  const baseUri = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const { logedInUser } = useContext(LoginContext);
 
@@ -13,7 +14,7 @@ function Profile() {
     
     if (token_value) {
       axios
-        .get("http://localhost:8080/auth/verify-token", {
+        .get(`${baseUri}/auth/verify-token`, {
           headers: {
             token: token_value,
           },

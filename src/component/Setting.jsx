@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 function Setting() {
+  const baseUri = import.meta.env.VITE_API_BASE_URL;
   const { logIn, logedInUser, setIsUserLogedIn } = useContext(LoginContext);
   {
     console.log("logedInUser" + logedInUser);
@@ -34,7 +35,7 @@ function Setting() {
 
   useEffect(() => {
     axios
-      .post("http://localhost:8080/auth/user-detail", {
+      .post(`${baseUri}/auth/user-detail`, {
         username: "test",
       })
       .then((response) => {
@@ -79,7 +80,7 @@ function Setting() {
       securityAns2,
     } = userData;
     axios
-      .post("http://localhost:8080/auth/update-user-detail", userData)
+      .post(`${baseUri}/auth/update-user-detail`, userData)
       .then((response) => {
         console.log(response.data);
         console.log(userData);

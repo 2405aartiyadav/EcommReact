@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
+  const baseUri = import.meta.env.VITE_API_BASE_URL;
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [secQuestion, setSecQuestion] = useState({});
@@ -52,7 +54,7 @@ function ResetPassword() {
       setIsPaswdSubmitting(true);
 
       axios
-        .post("http://localhost:8080/auth/reset-password", {
+        .post(`${baseUri}/auth/reset-password`, {
           email: email,
           password: passwordDetails.newPassword,
         })
@@ -75,7 +77,7 @@ function ResetPassword() {
     event.preventDefault();
 
     axios
-      .post("http://localhost:8080/auth/check-email-to-reset-password", {
+      .post(`${baseUri}/auth/check-email-to-reset-password`, {
         email: email,
       })
       .then((resp) => {
@@ -99,7 +101,7 @@ function ResetPassword() {
     event.preventDefault();
     try {
       axios
-        .post("http://localhost:8080/auth/verify-security-answer", {
+        .post(`${baseUri}/auth/verify-security-answer`, {
           email: email,
           securityQuestion1: secQuestion.securityQuestion1,
           securityAns1: secAnswer.securityAns1,
