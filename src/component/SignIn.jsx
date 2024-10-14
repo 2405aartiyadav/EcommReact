@@ -4,48 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LoginContext } from "../Context/LoginContext";
+import useAuthentication from "../CustomHooks/useAuthentication";
 
 function SignIn() {
   const baseUri = import.meta.env.VITE_API_BASE_URL;
+  const {login,logout}=useAuthentication();
   const navigate = useNavigate();
-  const { logIn, logOut, logedInUser, isUserLogedIn, setIsUserLogedIn } =
-    useContext(LoginContext);
   const { register, resetField, reset, handleSubmit } = useForm();
-{console.log(setIsUserLogedIn);
-}
+
   const onSubmit = (data) => {
-    // console.log(data);
     if (data.username && data.password) {
-      axios
-        .post(`${baseUri}/auth/login`, {
-          username: data.username,
-          password: data.password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            let result = logIn(data.username);
-            sessionStorage.setItem("token",res.data.token)
-            console.log(result);
-            toast.success("Loged in succesfully");
-            navigate("/profile");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.data.status === 400) {
-            toast.error(err.response.data);
-          }
-          
-          else if (err.response.data.status === 401){
-            setIsUserLogedIn(false);
-            toast.error(err.response.data);
-
-          }
-
-          else 
-            toast.error("failed to login");
-        });
+      login(data.username,data.password)
     } else {
       toast.error("Please enter valid username and password");
     }
@@ -122,7 +91,7 @@ function SignIn() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                Login in
               </button>
             </div>
           </form>
@@ -136,6 +105,19 @@ function SignIn() {
               Register here
             </Link>
           </p>
+
+          <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-yellow-500 mt-2 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={(event)=>{
+                  event.preventDefault();
+                  login('test','test@2024')
+                }}
+             >
+                Login with guest user
+              </button>
+            </div>
         </div>
       </div>
     </>

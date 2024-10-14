@@ -10,17 +10,21 @@ import axios from "axios";
 function Shop() {
   const baseUri = import.meta.env.VITE_API_BASE_URL;
   const [productData, setProductData] = useState([]);
+  const[totalCount,setotalCount]=useState(0)
 
   useEffect(() => {
     axios
       .get(`${baseUri}/product/get-all-products`)
       .then((res) => {
         setProductData(res.data);
+        setotalCount(productData.length);
+
+        
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [productData]);
 
   return (
     <div className="mx-5 my-10 flex">
@@ -48,7 +52,7 @@ function Shop() {
           </button>
         </div>
         <div className="mt-5">
-          <p className="font-bold text-sm">Showing 1-12 of 24 item(s)</p>
+          <p className="font-bold text-sm">Showing {totalCount} of 24 item(s)</p>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
             ducimus, in praesentium perspiciatis veniam rerum?
@@ -56,6 +60,7 @@ function Shop() {
         </div>
         <div className="mt-5 grid md:grid-cols-5  sm:grid-cols-2 gap-6">
           {productData.map((product,index) => {
+            
             return (
               <ProductCard key={index}
                 product={{

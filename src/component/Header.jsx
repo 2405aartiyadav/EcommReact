@@ -4,8 +4,10 @@ import profileIcon from "../assets/profile-icon1.png";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import useAuthentication from "../CustomHooks/useAuthentication";
 
 function Header() {
+  let { logout } = useAuthentication();
   const [click, setClick] = useState(false);
   const [isLoggIn, setIsLoggIn] = useState(false);
   const [navItemLoggin, setNavItemLoggin] = useState([
@@ -101,7 +103,7 @@ function Header() {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                {headerNavlinks.map((links,index) => {
+                {headerNavlinks.map((links, index) => {
                   return (
                     <Link
                       to={links.to}
@@ -112,7 +114,14 @@ function Header() {
                     </Link>
                   );
                 })}
-               
+                <button
+                  className="rounded-md px-3 py-2 text-sm font-medium
+                 text-red-400 bg-white hover:bg-gray-700
+                 hover:text-white"
+                  onClick={() => logout()}
+                >
+                  Logout
+                </button>
               </div>
             </div>
           </div>
