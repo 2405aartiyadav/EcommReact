@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { PrductContext } from "../Context/ProductContext";
+import { ProductContext } from "../Context/ProductContext";
 
 function Cart() {
   const [cartItems, setCartItems] = useState(new Map());
-  const { selectedItemInCart } = useContext(PrductContext);
+  const { selectedItemInCart } = useContext(ProductContext);
   const [quantity, setQuantity] = useState();
   useEffect(() => {
     console.log(selectedItemInCart);

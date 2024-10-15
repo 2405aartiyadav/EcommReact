@@ -9,13 +9,13 @@ function ProductCard({ product }) {
         <span className="w-5 bg-slate-800 opacity-80 rounded-lg px-2 text-sm text-white">
           {product.discount}%
         </span>
-        <img src={product.images} alt="" />
+        <img src={product.images} alt="" className="object-contain  h-48 w-96 " />
       </div>
-      <h2 className="text-sm ">{product.title}</h2>
+      <h2 className="text-sm  mt-5">{product.title}</h2>
       <div className="grid grid-cols-2">
         <p className="text-gray-600 font-bold">${product.price}</p>
         <button className="ml-auto ">
-          <Link to="/productdetail" state={{ productData: product}}>
+          <Link to="/productdetail" state={{ productData: product }}>
             <PlusCircleIcon className="size-8" />
           </Link>
         </button>

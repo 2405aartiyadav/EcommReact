@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
-const PrductContext = createContext();
+const ProductContext = createContext();
 
 function PrductContextProvider({ children }) {
   const [selectedItemInCart, setSelectedItemInCart] = useState(new Map());
+  const[searchInput,setSearchInput]=useState('');
   const addItemToCart = (id, product) => {
     console.log(id, product);
     if(selectedItemInCart.has(id)){
@@ -21,10 +22,10 @@ function PrductContextProvider({ children }) {
   },[])
 
   return (
-    <PrductContext.Provider value={{ selectedItemInCart, addItemToCart }}>
+    <ProductContext.Provider value={{ selectedItemInCart,searchInput, addItemToCart,setSearchInput }}>
       {children}
-    </PrductContext.Provider>
+    </ProductContext.Provider>
   );
 }
 
-export { PrductContext, PrductContextProvider };
+export { ProductContext, PrductContextProvider };

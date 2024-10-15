@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PrductContext } from "../../Context/ProductContext";
+import { ProductContext } from "../../Context/ProductContext";
 import toast from "react-hot-toast";
 
 function ProductDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const data = state.productData;
-  const { addItemToCart, selectedItemInCart } = useContext(PrductContext);
+  const { addItemToCart, selectedItemInCart } = useContext(ProductContext);
 
   const [cartItem, setCartItem] = useState([selectedItemInCart]);
   const [productImg, setProductImg] = useState("");
@@ -23,13 +22,16 @@ function ProductDetails() {
   });
 
   useEffect(() => {
-    console.log(data);
-
-    setProductData(data);
-    data && data.images && data.images.length > 0
-      ? setProductImg(data.images[0])
-      : "";
-  }, [data]);
+    if (state && state.productData) {
+      const data = state.productData;
+      setProductData(data);
+      data && data.images && data.images.length > 0
+        ? setProductImg(data.images[0])
+        : "";
+    } else {
+      navigate("/shop");
+    }
+  }, []);
 
   const addToCart = (event, productData) => {
     event.preventDefault();

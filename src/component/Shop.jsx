@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./Product/ProductCard";
+import {ProductContext} from'../Context/ProductContext.jsx'
 import {
   MagnifyingGlassCircleIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/solid";
-
 import SideBar from "./sidebar/SideBar";
 import axios from "axios";
+import { useContext } from "react";
 function Shop() {
   const baseUri = import.meta.env.VITE_API_BASE_URL;
   const [productData, setProductData] = useState([]);
-  const[totalCount,setotalCount]=useState(0)
+  const {searchInput,setSearchInput } = useContext(ProductContext);
+  const [totalCount, setotalCount] = useState(0);
 
   useEffect(() => {
     axios
@@ -18,14 +20,17 @@ function Shop() {
       .then((res) => {
         setProductData(res.data);
         setotalCount(productData.length);
-
-        
       })
       .catch((error) => {
         console.log(error);
       });
   }, [productData]);
 
+let filterItem=productData.filter((item)=>{
+  if(item.title.toLowerCase().includes(searchInput.toLowerCase())){
+    return item;
+  }
+})
   return (
     <div className="mx-5 my-10 flex">
       <div className="m-5">
@@ -42,6 +47,10 @@ function Shop() {
             type="text"
             placeholder="Seacrch an item"
             className="outline-none w-full border-none ml-2 text-gray-500"
+            value={searchInput}
+            onChange={(event) => {
+              setSearchInput(event.target.value);
+            }}
           />
           <button
             onClick={() => {
@@ -52,19 +61,21 @@ function Shop() {
           </button>
         </div>
         <div className="mt-5">
-          <p className="font-bold text-sm">Showing {totalCount} of 24 item(s)</p>
+          <p className="font-bold text-sm">
+            Showing {totalCount} of 24 item(s)
+          </p>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
             ducimus, in praesentium perspiciatis veniam rerum?
           </p>
         </div>
         <div className="mt-5 grid md:grid-cols-5  sm:grid-cols-2 gap-6">
-          {productData.map((product,index) => {
-            
+          {filterItem.map((product, index) => {
             return (
-              <ProductCard key={index}
+              <ProductCard
+                key={index}
                 product={{
-                  id:product._id,
+                  id: product._id,
                   title: product.title,
                   images: product.images,
                   discount: product.discount,

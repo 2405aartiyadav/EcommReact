@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import useAuthentication from "../CustomHooks/useAuthentication";
 
 function Header() {
-  let { logout } = useAuthentication();
+  let { logout,checkLoginStatus } = useAuthentication();
   const [click, setClick] = useState(false);
   const [isLoggIn, setIsLoggIn] = useState(false);
   const [navItemLoggin, setNavItemLoggin] = useState([
@@ -182,6 +182,8 @@ function Header() {
                   aria-labelledby="user-menu-button"
                   tabIndex="-1"
                 >
+                  {console.log(checkLoginStatus)
+                  }
                   {isLoggIn ? (
                     <>
                       {navItemLoggin.map((data) => {

@@ -19,9 +19,9 @@ function Page7() {
         </div>
         <div className="flex-col">
           <div className="">
-            {data.faq.map((Faq) => {
+            {data.faq.map((Faq,index) => {
               return (
-                <div className="border-2 border-black-200 m-3 p-4">
+                <div key={index} className="border-2 border-black-200 m-3 p-4">
                   <h5>
                     {Faq.question}
                     <span
