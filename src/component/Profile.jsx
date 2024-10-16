@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { LoginContext } from "../Context/LoginContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";

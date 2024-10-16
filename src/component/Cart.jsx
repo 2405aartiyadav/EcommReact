@@ -40,8 +40,9 @@ function Cart() {
   console.log(`totalItem ${totalItem}`);
 
   return (
-    <div className="flex flex-row mx-10 my-10">
-      <div className="basis-5/12 ">
+
+    <div className="flex flex-col md:flex-row justify-between bg-white p-4 rounded-lg shadow-md">
+      <div className="mt-5 w-full md:w-5/12">
         <table className="min-w-full border border-gray-300">
           <thead className="bg-gray-300">
             <tr>
@@ -88,7 +89,7 @@ function Cart() {
         </table>
       </div>
 
-      <div className="basis-5/12 mx-24 ">
+      <div className=" mt-5 w-full md:w-5/12 m-7">
         <h2 className="text-lg font-semibold mb-4 h-14 bg-gray-300">
           Cart Total
         </h2>
@@ -109,6 +110,7 @@ function Cart() {
         </button>
       </div>
     </div>
+    
   );
 }
 

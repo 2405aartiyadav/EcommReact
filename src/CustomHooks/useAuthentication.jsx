@@ -63,17 +63,28 @@ function useAuthentication() {
     navigate("/signin");
   };
 
-  const checkLoginStatus = async () => {
+  const checkLoginStatus =  () => {
     let authObj = localStorage.getItem("userAuthDetail");
-    if (authObj && authObj.loginStatus) {
-      //verify token
-      // await axios.get(`${baseUri}/auth/verify-token`,{
-      //   headers:{
-      //     token:authObj.token
-      //   }
-      // }).then((resp)=>{
+    console.log(authObj.loginStatus);
 
-      // })
+    if (authObj && authObj.loginStatus) {
+      // verify token
+       axios
+        .get(`${baseUri}/auth/verify-token`, {
+          headers: {
+            token: authObj.token,
+          },
+        })
+        .then((resp) => {
+          console.log("token verfied");
+        })
+        .catch((error) => {
+          toast("Session has expire,please re-login", {
+            duration: 6000,
+            position: "top-center",
+            icon: "❌",
+          });
+        });
       return true;
     } else {
       toast("Please login first.", {
@@ -81,7 +92,7 @@ function useAuthentication() {
         position: "top-center",
         icon: "❌",
       });
-      navigate('/signin')
+      navigate("/signin");
       return false;
     }
   };

@@ -32,21 +32,21 @@ let filterItem=productData.filter((item)=>{
   }
 })
   return (
+  
     <div className="mx-5 my-10 flex">
       <div className="m-5">
         <SideBar />
       </div>
       <div className="mx-10">
-        <p className="font-bold text-4xl text-gray-950 opacity-85">
-          {" "}
-          Our Collections Of Products
-        </p>
-
-        <div className="mt-5 flex items-center border border-gray-300 rounded-full w-full">
+          
+      <div className="max-w-7xl mx-auto p-4">
+        <header className="mb-8 font-bold text-4xl text-gray-950 opacity-85">
+          <h1 className="text-3xl font-bold mb-2">Our Collections Of Products</h1>
+          <div className="mt-5 flex items-center border border-gray-300 rounded-full w-full">
           <input
             type="text"
             placeholder="Seacrch an item"
-            className="outline-none w-full border-none ml-2 text-gray-500"
+            className="outline-none w-full border-none ml-2 text-lg text-gray-500"
             value={searchInput}
             onChange={(event) => {
               setSearchInput(event.target.value);
@@ -60,16 +60,14 @@ let filterItem=productData.filter((item)=>{
             <MagnifyingGlassCircleIcon className="size-10" />
           </button>
         </div>
-        <div className="mt-5">
-          <p className="font-bold text-sm">
-            Showing {totalCount} of 24 item(s)
+          <p className="text-gray-500 text-lg mt-4 font-bold">
+            Showing {totalCount} of 24 item(s) <br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ducimus, in praesentium perspiciatis veniam rerum?
           </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
-            ducimus, in praesentium perspiciatis veniam rerum?
-          </p>
-        </div>
-        <div className="mt-5 grid md:grid-cols-5  sm:grid-cols-2 gap-6">
+        </header>
+        
+        <div className="mt-5 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {/* <div className="mt-5 grid md:grid-cols-5  sm:grid-cols-2 gap-6"> */}
           {filterItem.map((product, index) => {
             return (
               <ProductCard
@@ -88,6 +86,7 @@ let filterItem=productData.filter((item)=>{
           })}
         </div>
       </div>
+    </div>
     </div>
   );
 }

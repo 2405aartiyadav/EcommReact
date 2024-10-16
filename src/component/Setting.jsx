@@ -33,10 +33,10 @@ function Setting() {
   });
 
   useEffect(() => {
-    if(checkLoginStatus){
+    if(checkLoginStatus()){
       axios
       .post(`${baseUri}/auth/user-detail`, {
-        username: "test",
+        username:username,
       })
       .then((response) => {
         let resp = response.data;
@@ -61,32 +61,12 @@ function Setting() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const {
-      username,
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      gender,
-      dob,
-      newPasswd,
-      confirmPasswd,
-      address,
-      country,
-      state,
-      city,
-      zipCode,
-      securityQuestion1,
-      securityAns1,
-      securityQuestion2,
-      securityAns2,
-    } = userData;
+   
     axios
       .post(`${baseUri}/auth/update-user-detail`, userData)
       .then((response) => {
         console.log(response.data);
         console.log(userData);
-
         toast.success("User detail updated");
       })
       .catch((error) => {
