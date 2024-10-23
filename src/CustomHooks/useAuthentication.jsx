@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 function useAuthentication() {
   const baseUri = import.meta.env.VITE_API_BASE_URL;
-  const [isUserLogedIn, setIsUserLogedIn] = useState(false);
+  const{setIsUserLoggedIn}=useContext(AuthContext)
 
   let navigate = useNavigate();
 
@@ -17,7 +18,7 @@ function useAuthentication() {
       })
       .then((resp) => {
         if (resp.status === 200 && resp.data.token) {
-          setIsUserLogedIn(true);
+          setIsUserLoggedIn(true);
           toast("Loged in succesfully", {
             duration: 3000,
             position: "top-center",
@@ -29,20 +30,22 @@ function useAuthentication() {
             loginStatus: true,
             token: resp.data.token,
           };
-          sessionStorage.setItem("token", resp.data.token);
           localStorage.setItem("userAuthDetail", JSON.stringify(userObj));
-          navigate("/profile");
+          setIsUserLoggedIn(true)
+          navigate("/shop");
         } else {
           toast("Login failed!", {
             duration: 3000,
             position: "top-center",
             icon: "⚠️",
           });
+          setIsUserLoggedIn(false)
+
         }
       })
       .catch((error) => {
         console.log(error);
-        setIsUserLogedIn(false);
+        setIsUserLoggedIn(false)
         let errMsg = error.response.data.message;
         toast(errMsg, {
           duration: 3000,
@@ -54,7 +57,7 @@ function useAuthentication() {
 
   const logout = () => {
     localStorage.removeItem("userAuthDetail");
-    setIsUserLogedIn(false);
+    setIsUserLoggedIn(false);
     toast("You have been logged out.", {
       duration: 3000,
       icon: "ℹ",
@@ -64,9 +67,9 @@ function useAuthentication() {
   };
 
   const checkLoginStatus =  () => {
-    let authObj = localStorage.getItem("userAuthDetail");
-    console.log(authObj.loginStatus);
-
+    let authObj = JSON.parse(localStorage.getItem("userAuthDetail")) 
+    console.log(authObj);
+    
     if (authObj && authObj.loginStatus) {
       // verify token
        axios
@@ -85,18 +88,33 @@ function useAuthentication() {
             icon: "❌",
           });
         });
-      return true;
     } else {
-      toast("Please login first.", {
-        duration: 3000,
-        position: "top-center",
-        icon: "❌",
+      toast.error('User not logged in!', {
+        duration: 3000, 
+        position: 'top-right', 
+        style: {
+          borderRadius: '8px',
+          background: '#000',
+          color: '#fff',
+        },
       });
+      // toast("Please login first.", {
+      //   duration: 3000,
+      //   position: "top-center",
+      //   icon: "❌",
+      // });
       navigate("/signin");
-      return false;
     }
   };
-  return { login, logout, checkLoginStatus };
+
+  const getUserAuthDetail=()=>{
+    let authObj = JSON.parse(localStorage.getItem("userAuthDetail")) 
+    return authObj;
+
+
+  }
+  return { login, logout, checkLoginStatus,getUserAuthDetail };
+
 }
 
 export default useAuthentication;

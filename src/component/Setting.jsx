@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import AccountSettingInput from "./AccountSettingInput";
-import { LoginContext } from "../Context/LoginContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useAuthentication from "../CustomHooks/useAuthentication";
+import { AuthContext } from "../Context/AuthContext";
 
 function Setting() {
   const baseUri = import.meta.env.VITE_API_BASE_URL;
-  const { logIn, logedInUser, setIsUserLogedIn } = useContext(LoginContext);
-  const { checkLoginStatus } = useAuthentication();
+  const { checkLoginStatus,getUserAuthDetail } = useAuthentication();
+  const{isUserLoggedIn}=useContext(AuthContext)
+
   const [formData, setFormData] = useState();
   const [isLoggIn, setIsLoggIn] = useState(false);
   const [userData, setUserData] = useState({
@@ -33,10 +34,15 @@ function Setting() {
   });
 
   useEffect(() => {
-    if(checkLoginStatus()){
+    
+    if(isUserLoggedIn){
+    console.log(getUserAuthDetail());
+    console.log(getUserAuthDetail().username);
+
+
       axios
       .post(`${baseUri}/auth/user-detail`, {
-        username:username,
+        username:getUserAuthDetail().username,
       })
       .then((response) => {
         let resp = response.data;
@@ -76,7 +82,6 @@ function Setting() {
   };
   return (
     <>
-      {checkLoginStatus? 
         <div id="setting">
           <div className="profileInformation">
             <div className="mx-28 mt-10">
@@ -262,7 +267,7 @@ function Setting() {
               </form>
             </div>
 
-            <div className="securityInformation">
+            <div className="securityInformation" id="securityInformation">
               <div className="mx-28 mt-4 p-9 bg-slate-100">
                 <p className="text-red-400 font-bold">
                   **This functionality is currently unavailable
@@ -374,9 +379,8 @@ function Setting() {
             </div>
           </div>
         </div>
-       : 
-        ""
-      }
+       
+      
     </>
   );
 }

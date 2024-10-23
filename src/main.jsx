@@ -12,7 +12,6 @@ import {
 import SignIn from "./component/SignIn.jsx";
 import SignUp from "./component/SignUp.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
-import { LoginProvider } from "./Context/LoginContext.jsx";
 import Profile from "./component/Profile.jsx";
 import Setting from "./component/Setting.jsx";
 import Cart from "./component/Cart.jsx";
@@ -24,12 +23,14 @@ import ContactUs from "./component/ContactUs.jsx";
 import Blog from "./component/Blog.jsx";
 import MainLandingPage from "./component/LandingPage/MainLandingPage.jsx";
 import ProductDetails from "./component/Product/ProductDetails.jsx";
+import Test from "./component/Test.jsx";
+import { AuthContextProvider } from "./Context/AuthContext.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="" element={<MainLandingPage />} />
-
+      <Route path="test" element={<Test />} />
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="profile" element={<Profile />} />
@@ -44,17 +45,17 @@ const router = createBrowserRouter(
       <Route path="contact" element={<ContactUs />} />
       <Route path="blog" element={<Blog />} />
       <Route path="productdetail" element={<ProductDetails />} />
-      {/* <Route path="test" element={<Test />} /> */}
+      <Route path="test" element={<Test />} />
 
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
-    <LoginProvider>
+    <AuthContextProvider>
       <PrductContextProvider>
         <RouterProvider router={router} />
       </PrductContextProvider>
-    </LoginProvider>
+    </AuthContextProvider>
   </>
 );

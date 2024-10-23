@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 const Checkout = () => {
+  const baseUri = import.meta.env.VITE_API_BASE_URL;
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -13,6 +15,17 @@ const Checkout = () => {
     zipCode: "",
   });
 
+  useEffect(()=>{
+   axios.post(`${baseUri}/auth/user-detail`,{
+    username:"test"
+   }).then((resp)=>{
+    console.log(`checkoutdata ${resp.data}`);
+    setUserData(resp.data)
+   }).catch((error)=>{
+    console.log(error);
+    
+   })
+  },[])
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -20,6 +33,17 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios
+      .post(`${baseUri}/auth/update-check-out-detail`, userData)
+      .then((response) => {
+        console.log(response.data);
+        console.log(userData);
+        toast.success("User detail updated");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something went wrong");
+      });
   };
   return (
     <div className="flex flex-col md:flex-row justify-between p-4 md:p-10 bg-gray-100">

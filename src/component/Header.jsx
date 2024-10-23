@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import profileIcon  from "../assets/profile-icon.png";
 import profileIcon from "../assets/profile-icon1.png";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuthentication from "../CustomHooks/useAuthentication";
-
+import { AuthContext } from "../Context/AuthContext";
 function Header() {
-  let { logout,checkLoginStatus } = useAuthentication();
+const navigate=useNavigate();
+  const{isUserLoggedIn}=useContext(AuthContext)
+  let { login,logout,checkLoginStatus } = useAuthentication();
   const [click, setClick] = useState(false);
   const [isLoggIn, setIsLoggIn] = useState(false);
   const [navItemLoggin, setNavItemLoggin] = useState([
     { item: "Your Profile", to: "/profile" },
     { item: "Settings", to: "/setting" },
-    { item: "Sign Out", to: "/" },
   ]);
 
   const [navItemLogOut, setNavItemLogOut] = useState([
@@ -28,17 +29,11 @@ function Header() {
     { item: "Blog", to: "/blog" },
   ]);
   useEffect(() => {
-    let token = sessionStorage.getItem("token");
-    if (token && token != "") {
-      setIsLoggIn(true);
-    } else {
-      setIsLoggIn(false);
-      toast.error("User Logged out");
-    }
-  });
+    checkLoginStatus()
+  },[]);
 
   return (
-    <nav style={{ backgroundColor: "#cbd5e1" }}>
+    <nav className="bg-gray-300 p-4">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -114,14 +109,24 @@ function Header() {
                     </Link>
                   );
                 })}
-                <button
+               
+               {
+                isUserLoggedIn? <button
+                className="rounded-md px-3 py-2 text-sm font-medium
+               text-red-400 bg-white hover:bg-gray-700
+               hover:text-white"
+                onClick={() => logout()}
+              >
+                Logout
+              </button>: <button
                   className="rounded-md px-3 py-2 text-sm font-medium
                  text-red-400 bg-white hover:bg-gray-700
                  hover:text-white"
-                  onClick={() => logout()}
+                  onClick={() => navigate('/signin')}
                 >
-                  Logout
+                  LogIn
                 </button>
+               }
               </div>
             </div>
           </div>
@@ -182,13 +187,11 @@ function Header() {
                   aria-labelledby="user-menu-button"
                   tabIndex="-1"
                 >
-                  {console.log(checkLoginStatus)
-                  }
-                  {isLoggIn ? (
+                 
+                  {isUserLoggedIn ? (
                     <>
                       {navItemLoggin.map((data) => {
                         return (
-                          <>
                             <Link
                               to={data.to}
                               className="block px-4 py-2 text-sm text-gray-700"
@@ -198,9 +201,10 @@ function Header() {
                             >
                               {data.item}
                             </Link>
-                          </>
                         );
                       })}
+
+                      <p  className="block px-4 py-2 text-sm text-gray-700" onClick={()=>logout()}>Sign Out</p>
                     </>
                   ) : (
                     <>

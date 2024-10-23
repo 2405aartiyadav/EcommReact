@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ProductContext } from "../Context/ProductContext";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const [cartItems, setCartItems] = useState(new Map());
@@ -40,7 +41,6 @@ function Cart() {
   console.log(`totalItem ${totalItem}`);
 
   return (
-
     <div className="flex flex-col md:flex-row justify-between bg-white p-4 rounded-lg shadow-md">
       <div className="mt-5 w-full md:w-5/12">
         <table className="min-w-full border border-gray-300">
@@ -105,12 +105,13 @@ function Cart() {
           <span>TOTAL</span>
           <span>${totalPriceAfterDiscount}</span>
         </div>
-        <button className="w-full mt-4 bg-black text-white py-3 rounded-lg">
-          Proceed To Checkout
-        </button>
+        <Link to="/checkout">
+          <button className="w-full mt-4 bg-black text-white py-3 rounded-lg">
+            Proceed To Checkout
+          </button>
+        </Link>
       </div>
     </div>
-    
   );
 }
 

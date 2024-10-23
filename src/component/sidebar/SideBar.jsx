@@ -1,50 +1,64 @@
-import React, { useState } from "react";
-import {ChevronDownIcon} from '@heroicons/react/24/solid'
+import React, { useEffect, useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import PriceFilter from "./PriceFilter";
 
-function SideBar() {
-  const [categories, setCategories] = useState([
-    { name: "Lorem ipsum", count: 3 },
-    { name: "Lorem ipsum", count: 3 },
-    { name: "Lorem ipsum", count: 3 },
-    { name: "Lorem ipsum", count: 3 },
-    { name: "Lorem ipsum", count: 3 },
-  ]);
-
+function SideBar({selectedCategory,setSelectedCategory,priceRange,setPriceRange}) {
+  
   // const[priceRange,setPriceRange]=useState([{'100'}])
-  const [toggle, setToggle] = useState(false);
+ 
+  const handleCategoryChange=(e)=>{
+
+    setSelectedCategory(e.target.value);
+    console.log(`selectedcat=${selectedCategory}`);
+    
+   
+  }
+ const handlePriceChange=(e)=>{
+  const value=e.target.value;
+  setPriceRange([priceRange[0],Number(value)]);
+ }
 
   return (
     <div>
-      <div className="w-52 h-72 border-2 border-gray-800 p-3">
-        <p className="font-bold text-sm  border-black border-l-4 p-2">
+      <div className="w-52 border rounded-lg p-4 bg-white shadow-lg">
+        <h2 className="text-lg font-bold border-l-4 border-indigo-500 pl-2 mb-4">
           Categories
-        </p>
-        <ul className="category-list">
-          {categories.map((category, index) => {
-            return (
-              <li key={index}>
-                <div
-                  className="flex category-item"
-                >
-                  <span>{`${category.name} (${category.count})`}</span>
-                  <span
-                      className="cursor-pointer pl-10"
-                      onClick={(index) => {
-                        setToggle(!toggle);
-                      }}
-                    >
-                      {toggle ? "" :<ChevronDownIcon className="size-4"/>}
-                    </span>
-                </div>
-              </li>
-            );
-          })}
+        </h2>
+        <ul className="space-y-3">
+            <li  className="flex justify-between items-center">
+             <select value={selectedCategory} name="category" id="" onChange={handleCategoryChange}>
+              <option value="All">All</option>
+              <option value="Laptop">Laptop</option>
+              <option value="Earphone">Earphone</option>
+              <option value="Headphone">Headphone</option>
+              <option value="Mouse">Mouse</option>
+              <option value="Keyboard">Electronics</option>
+              <option value="Keyboard">Keyboard</option>
+             </select>
+             
+            </li>
         </ul>
       </div>
-      <div className="w-52 h-72 border-2 border-gray-800 p-3 mt-10">
-        <p className="font-bold text-sm  border-black border-l-4 p-2">
+
+      {/* Price range */}
+      <div className="mt-10 border rounded-lg p-4 bg-white shadow-lg">
+        <h2 className="text-lg font-bold border-l-4 border-blue-500 pl-2 mb-4">
           Price Range
-        </p>
+        </h2>
+        <div className="flex justify-between items-center">
+          <input
+            type="range"
+            min="200"
+            max="100000"
+            className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
+            value={priceRange[1]}
+            onChange={handlePriceChange}
+         />
+        </div>
+        <div className="flex justify-between mt-4 text-gray-600">
+          <span>${priceRange[0]}</span>
+          <span>${priceRange[1]}</span>
+        </div>
       </div>
     </div>
   );

@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ProductContext } from "../../Context/ProductContext";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../Context/AuthContext";
+import useAuthentication from "../../CustomHooks/useAuthentication";
 
 function ProductDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { addItemToCart, selectedItemInCart } = useContext(ProductContext);
+  const{checkLoginStatus}=useAuthentication();
 
   const [cartItem, setCartItem] = useState([selectedItemInCart]);
   const [productImg, setProductImg] = useState("");
@@ -20,8 +23,11 @@ function ProductDetails() {
     features: [],
     description: "",
   });
+  const{isUserLoggedIn}=useContext(AuthContext)
 
   useEffect(() => {
+    checkLoginStatus();
+    
     if (state && state.productData) {
       const data = state.productData;
       setProductData(data);
@@ -31,7 +37,7 @@ function ProductDetails() {
     } else {
       navigate("/shop");
     }
-  }, []);
+  }, [isUserLoggedIn]);
 
   const addToCart = (event, productData) => {
     event.preventDefault();

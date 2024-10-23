@@ -1,16 +1,17 @@
 import React from 'react'
-import Page1 from './Page1';
-import Page2 from './Page2';
+import Page1 from './Header';
+import Featured from './Featured';
 import Page4 from './Page4';
-import Page7 from './Page7';
+import FAQ from './Faq';
+import Header from './Header';
 
 function MainLandingPage() {
   return (
-    <div>
-      <Page1/>
-      <Page2/>
+    <div className='mx-16'>
+      <Header/>
+      <Featured/>
       <Page4/>
-      <Page7/>
+      <FAQ/>
 
     </div>
   )
