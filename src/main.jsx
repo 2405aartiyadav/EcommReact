@@ -23,7 +23,7 @@ import ContactUs from "./component/ContactUs.jsx";
 import Blog from "./component/Blog.jsx";
 import MainLandingPage from "./component/LandingPage/MainLandingPage.jsx";
 import ProductDetails from "./component/Product/ProductDetails.jsx";
-import Test from "./component/Test.jsx";
+// import Test from "./component/Test.jsx";
 import { AuthContextProvider } from "./Context/AuthContext.jsx";
 
 const router = createBrowserRouter(
@@ -45,7 +45,7 @@ const router = createBrowserRouter(
       <Route path="contact" element={<ContactUs />} />
       <Route path="blog" element={<Blog />} />
       <Route path="productdetail" element={<ProductDetails />} />
-      <Route path="test" element={<Test />} />
+      {/* <Route path="test" element={<Test />} /> */}
 
     </Route>
   )

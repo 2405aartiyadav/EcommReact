@@ -25,7 +25,7 @@ function Shop() {
         // console.log(`category ${res.data.category}`);
         console.log(setotalCount(productData.length));
 
-        setotalCount(productData.length);
+       setotalCount(filterProducts.length)
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +40,7 @@ function Shop() {
 
   
   // Apply price filter
-  const filterProducts = productData.filter((product) => {
+   const filterProducts = productData.filter((product) => {
     const filterBySearch = product.title
       .toLowerCase()
       .includes(searchInput.toLowerCase());
@@ -52,7 +52,7 @@ function Shop() {
       product.price >= priceRange[0] && product.price <= priceRange[1];
     return filterBySearch && filterByCategory && filterByPrice;
   });
-
+ 
   return (
     <div className="mx-5 my-10 flex ">
       <div className="m-5">
