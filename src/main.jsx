@@ -25,12 +25,12 @@ import MainLandingPage from "./component/LandingPage/MainLandingPage.jsx";
 import ProductDetails from "./component/Product/ProductDetails.jsx";
 // import Test from "./component/Test.jsx";
 import { AuthContextProvider } from "./Context/AuthContext.jsx";
+import PaymentFinal from "./component/PaymentFinal.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="" element={<MainLandingPage />} />
-      <Route path="test" element={<Test />} />
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="profile" element={<Profile />} />
@@ -45,6 +45,8 @@ const router = createBrowserRouter(
       <Route path="contact" element={<ContactUs />} />
       <Route path="blog" element={<Blog />} />
       <Route path="productdetail" element={<ProductDetails />} />
+      <Route path="payment" element={<PaymentFinal />} />
+
       {/* <Route path="test" element={<Test />} /> */}
 
     </Route>

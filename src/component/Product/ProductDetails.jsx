@@ -8,7 +8,7 @@ import useAuthentication from "../../CustomHooks/useAuthentication";
 function ProductDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { addItemToCart, selectedItemInCart } = useContext(ProductContext);
+  const { addItemToCart, selectedItemInCart,setTotalQty,totalQty} = useContext(ProductContext);
   const{checkLoginStatus}=useAuthentication();
 
   const [cartItem, setCartItem] = useState([selectedItemInCart]);
@@ -52,7 +52,8 @@ function ProductDetails() {
 
     if (qty > 0) {
       addItemToCart(productData.id, productDetail);
-      console.log(selectedItemInCart);
+      // console.log(`totalqty${totalQty}`);
+      // console.log(selectedItemInCart);
       navigate("/cart");
       setQty(0);
     } else {
@@ -60,6 +61,25 @@ function ProductDetails() {
     }
   };
 
+  const addToBuy=(event,productData)=>{
+    event.preventDefault();
+    const productDetail = {
+      title: productData.title,
+      image: productData.images[0],
+      actualPrice: productData.price,
+      quantity: qty,
+      discount: productData.discount,
+    };
+    if(qty>0){
+      addItemToCart(productData.id,productDetail)
+      navigate("/checkout");
+      setQty(0);
+    }
+    else {
+      toast.error("Please select item to add");
+    }
+
+  }
   return (
     <>
       <div className="flex flex-row mx-10 my-10  gap-6">
@@ -84,7 +104,7 @@ function ProductDetails() {
         <div className="basis-5/12 mx-10">
           <div className="">
             <p className="text-2xl font-bold">{productData.title}</p>
-            <p className="text-2xl  mt-4">${productData.price} </p>
+            <p className="text-2xl  mt-4">₨.{productData.price.toLocaleString()} </p>
             <hr className="border border-950 mt-10" />
             <p className="mt-5">{productData.description}</p>
             <ul style={{ listStyle: "disc" }} className="mt-5">
@@ -126,7 +146,9 @@ function ProductDetails() {
               </span>
             </div>
           </div>
-          <button className="w-full border border-black rounded-full p-2 bg-zinc mt-5">
+          <button className="w-full border border-black rounded-full p-2 bg-zinc mt-5" onClick={(event)=>{
+            addToBuy(event,productData)
+          }}>
             Buy Now
           </button>
           <div></div>

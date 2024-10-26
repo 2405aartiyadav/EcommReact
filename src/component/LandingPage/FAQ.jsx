@@ -20,7 +20,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center p-4">
+    <div className="my-20 flex justify-center items-center p-4">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-6xl flex flex-col lg:flex-row p-8">
         {/* Left Side: FAQ Title and Button */}
         <div className="flex-1 mb-6 lg:mb-0 lg:mr-8">
@@ -63,7 +63,7 @@ const FAQ = () => {
             {questions.map((question, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-purple-500 to-indigo-500 p-4 rounded-lg shadow-md"
+                className="bg-slate-700  p-4 rounded-lg shadow-md"
               >
                 <h3 className="text-white font-semibold">{question}</h3>
               </div>

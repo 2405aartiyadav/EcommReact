@@ -22,10 +22,6 @@ function Shop() {
       .then((res) => {
         console.log(res.data);
         setProductData(res.data);
-        // console.log(`category ${res.data.category}`);
-        console.log(setotalCount(productData.length));
-
-       setotalCount(filterProducts.length)
       })
       .catch((error) => {
         console.log(error);
@@ -38,21 +34,24 @@ function Shop() {
   //   }
   // });
 
-  
   // Apply price filter
-   const filterProducts = productData.filter((product) => {
-    const filterBySearch = product.title
+  const filterProducts = productData.filter((product) => {
+    const filterBySearch =searchInput? product.title
       .toLowerCase()
-      .includes(searchInput.toLowerCase());
+      .includes(searchInput.toLowerCase()):true;
 
-    const filterByCategory =
-      selectedCategory === "All" || product.category === selectedCategory;
+    const filterByCategory =selectedCategory?selectedCategory === "All" || product.category === selectedCategory:true;
 
-    const filterByPrice =
-      product.price >= priceRange[0] && product.price <= priceRange[1];
-    return filterBySearch && filterByCategory && filterByPrice;
+    const filterByPrice =priceRange?product.price >= priceRange[0] && product.price <= priceRange[1]:true;
+
+      return filterBySearch&&filterByCategory&&filterByPrice;
+    
   });
- 
+
+  useEffect(() => {
+    setotalCount(filterProducts.length);
+  }, [filterProducts]);
+  
   return (
     <div className="mx-5 my-10 flex ">
       <div className="m-5">

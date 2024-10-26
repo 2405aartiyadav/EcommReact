@@ -18,7 +18,7 @@ function ProductCard({ product }) {
       </div>
       <h2 className="font-semibold mt-5">{product.title}</h2>
       <div className="grid md:grid-cols-2">
-        <p className="text-lg font-bold text-gray-800 mb-2">${product.price}</p>
+        <p className="text-lg font-bold text-gray-800 mb-2">₨.{product.price.toLocaleString()}</p>
         <button className="ml-auto ">
           <Link to="/productdetail" state={{ productData: product }}>
             <PlusCircleIcon className="size-8" />

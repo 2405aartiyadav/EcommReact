@@ -17,7 +17,7 @@ function Featured() {
 
   return (
     <div className="mt-20   ">
-      <div class="p-2 flex-grow text-3xl lg:text-4xl font-bold mb-6"> Featured Products</div>
+      <div className="p-2 flex-grow text-3xl lg:text-4xl font-bold mb-6"> Featured Products</div>
       <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-8 px-10 transform transition duration-300">
         {products.map((product, index) => (
           <ProductCard

@@ -4,7 +4,7 @@ import Cards from "../Product/ProductCard";
 function Header() {
   return (
     <>
-      <header className="bg-gradient-to-r from-gray-200 to-gray-250 py-16 text-center">
+      <header className="bg-slate-400 py-16 text-center">
         <h1 className="text-4xl font-bold mb-4">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident, ut?
         </h1>

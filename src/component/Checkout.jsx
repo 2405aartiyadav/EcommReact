@@ -1,7 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import Cart from './Cart'
+import useAuthentication from "../CustomHooks/useAuthentication";
+import { Link } from "react-router-dom";
 const Checkout = () => {
   const baseUri = import.meta.env.VITE_API_BASE_URL;
+  const{getUserAuthDetail}=useAuthentication();
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -17,7 +22,7 @@ const Checkout = () => {
 
   useEffect(()=>{
    axios.post(`${baseUri}/auth/user-detail`,{
-    username:"test"
+    username:getUserAuthDetail().username
    }).then((resp)=>{
     console.log(`checkoutdata ${resp.data}`);
     setUserData(resp.data)
@@ -48,7 +53,7 @@ const Checkout = () => {
   return (
     <div className="flex flex-col md:flex-row justify-between p-4 md:p-10 bg-gray-100">
       {/* Form Section */}
-      <div className="w-full md:w-1/2 bg-gray-100 p-5 shadow-md mb-5 border-4 border-spacing-6gray md:mb-0">
+      <div className="w-full md:w-2/5 bg-gray-100 p-5 shadow-md mb-5 border-4 border-spacing-6gray md:mb-0">
         <div className="border-b-2 mb-5">
           <ul className="flex justify-between">
             <li className="text-gray-600 font-medium py-2">Personal</li>
@@ -67,6 +72,7 @@ const Checkout = () => {
                 type="text"
                 value={userData.firstName}
                 className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
+                readOnly
               />
             </div>
             <div>
@@ -76,6 +82,7 @@ const Checkout = () => {
               <input
                 type="text"
                 value={userData.lastName}
+                readOnly
                 className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
               />
             </div>
@@ -88,6 +95,7 @@ const Checkout = () => {
             <input
               type="email"
               value={userData.email}
+              readOnly
               className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
             />
           </div>
@@ -99,6 +107,7 @@ const Checkout = () => {
             <input
               type="tel"
               value={userData.phoneNumber}
+              readOnly
               className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
             />
           </div>
@@ -110,6 +119,7 @@ const Checkout = () => {
             <input
               type="text"
               value={userData.address}
+              readOnly
               className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
             />
           </div>
@@ -122,6 +132,7 @@ const Checkout = () => {
               <input
                 type="text"
                 value={userData.city}
+                readOnly
                 className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
               />
             </div>
@@ -132,6 +143,7 @@ const Checkout = () => {
               <input
                 type="text"
                 value={userData.country}
+                readOnly
                 className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
               />
             </div>
@@ -144,17 +156,24 @@ const Checkout = () => {
             <input
               type="text"
               value={userData.zipCode}
+              readOnly
               className="mt-1 block w-full border border-gray-300 p-2 rounded-md shadow-sm"
             />
           </div>
 
+          <Link to="/payment">
           <button
             type="submit"
             className="mt-6 w-full md:w-auto bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800"
           >
             Proceed to Next Step
           </button>
+          </Link>
         </form>
+      </div>
+      <div  className="w-full md:w-4/5 bg-gray-100 p-5 shadow-md mb-5 border-4 border-spacing-6gray md:mb-0">
+        <Cart/>
+        
       </div>
     </div>
   );

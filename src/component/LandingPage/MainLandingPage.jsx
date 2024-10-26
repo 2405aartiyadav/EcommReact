@@ -7,7 +7,7 @@ import Header from './Header';
 
 function MainLandingPage() {
   return (
-    <div className='mx-16'>
+    <div className=''>
       <Header/>
       <Featured/>
       <Page4/>

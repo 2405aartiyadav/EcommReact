@@ -20,7 +20,7 @@ function Page4() {
 
   return (
     <>
-      <div className="mt-20 my-24 bg-gradient-to-r from-gray-200 to-gray-250 p-10">
+      <div className=" bg-slate-400 p-10">
         <div className="flex flex-row ">
           <span className="flex-grow text-3xl lg:text-4xl font-bold mb-2">
             Most Popular Products

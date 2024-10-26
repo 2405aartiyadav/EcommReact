@@ -15,8 +15,8 @@ function PriceFilter() {
       />
     </div>
     <div className="flex justify-between mt-4 text-gray-600">
-      <span>$200</span>
-      <span>$100000</span>
+      <span>₨.200</span>
+      <span>₨.100000</span>
     </div>
   </div>
   )

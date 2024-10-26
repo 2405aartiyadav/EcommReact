@@ -38,8 +38,6 @@ function Setting() {
     if(isUserLoggedIn){
     console.log(getUserAuthDetail());
     console.log(getUserAuthDetail().username);
-
-
       axios
       .post(`${baseUri}/auth/user-detail`, {
         username:getUserAuthDetail().username,
@@ -47,10 +45,10 @@ function Setting() {
       .then((response) => {
         let resp = response.data;
 
-        let dateString = resp.dob.toString();
-        const indexofT = dateString.indexOf("T");
-        const dob1 = dateString.substring(0, indexofT);
-        resp.dob = dob1;
+        // let dateString = resp.dob.toString();
+        // const indexofT = dateString.indexOf("T");
+        // const dob1 = dateString.substring(0, indexofT);
+        // resp.dob = dob1;
         setUserData(resp);
       })
       .catch((error) => {

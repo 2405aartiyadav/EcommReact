@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 // import profileIcon  from "../assets/profile-icon.png";
 import profileIcon from "../assets/profile-icon1.png";
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuthentication from "../CustomHooks/useAuthentication";
 import { AuthContext } from "../Context/AuthContext";
 function Header() {
-const navigate=useNavigate();
-  const{isUserLoggedIn}=useContext(AuthContext)
-  let { login,logout,checkLoginStatus } = useAuthentication();
+  const navigate = useNavigate();
+  const { isUserLoggedIn } = useContext(AuthContext);
+  let { login, logout, checkLoginStatus } = useAuthentication();
   const [click, setClick] = useState(false);
   const [isLoggIn, setIsLoggIn] = useState(false);
   const [navItemLoggin, setNavItemLoggin] = useState([
@@ -25,12 +26,12 @@ const navigate=useNavigate();
   const [headerNavlinks, setHeaderNavlink] = useState([
     { item: "Home", to: "" },
     { item: "Shop", to: "/shop" },
-    { item: "Contact Us", to: "/contact" },
-    { item: "Blog", to: "/blog" },
+    { item: "Contact Us", to: "/contact" }
+    // { item: "Blog", to: "/blog" },
   ]);
   useEffect(() => {
-    checkLoginStatus()
-  },[]);
+    checkLoginStatus();
+  }, []);
 
   return (
     <nav className="bg-gray-300 p-4">
@@ -46,33 +47,6 @@ const navigate=useNavigate();
             >
               <span className="absolute -inset-0.5"></span>
               <span className="sr-only">Open main menu</span>
-
-              {/* <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          --> */}
-
-              <svg
-                className="block h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-
-              {/* <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          --> */}
 
               <svg
                 className="hidden h-6 w-6"
@@ -109,50 +83,38 @@ const navigate=useNavigate();
                     </Link>
                   );
                 })}
-               
-               {
-                isUserLoggedIn? <button
-                className="rounded-md px-3 py-2 text-sm font-medium
+
+                {isUserLoggedIn ? (
+                  <button
+                    className="rounded-md px-3 py-2 text-sm font-medium
                text-red-400 bg-white hover:bg-gray-700
                hover:text-white"
-                onClick={() => logout()}
-              >
-                Logout
-              </button>: <button
-                  className="rounded-md px-3 py-2 text-sm font-medium
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    className="rounded-md px-3 py-2 text-sm font-medium
                  text-red-400 bg-white hover:bg-gray-700
                  hover:text-white"
-                  onClick={() => navigate('/signin')}
-                >
-                  LogIn
-                </button>
-               }
+                    onClick={() => navigate("/signin")}
+                  >
+                    LogIn
+                  </button>
+                )}
               </div>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            >
-              <span className="absolute -inset-1.5"></span>
-              <span className="sr-only">View notifications</span>
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
+            <Link to="/cart">
+              <button
+                type="button"
+                className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                />
-              </svg>
-            </button>
-
+                <ShoppingCartIcon className="size-8" />
+              </button>
+            </Link>
             {/* <!-- Profile dropdown --> */}
             <div className="relative ml-3">
               <div>
@@ -187,28 +149,33 @@ const navigate=useNavigate();
                   aria-labelledby="user-menu-button"
                   tabIndex="-1"
                 >
-                 
                   {isUserLoggedIn ? (
                     <>
-                      {navItemLoggin.map((data) => {
+                      {navItemLoggin.map((data, index) => {
                         return (
-                            <Link
-                              to={data.to}
-                              className="block px-4 py-2 text-sm text-gray-700"
-                              role="menuitem"
-                              tabIndex="-1"
-                              id="user-menu-item-1"
-                            >
-                              {data.item}
-                            </Link>
+                          <Link
+                            to={data.to}
+                            className="block px-4 py-2 text-sm text-gray-700"
+                            role="menuitem"
+                            tabIndex="-1"
+                            id="user-menu-item-1"
+                            key={index}
+                          >
+                            {data.item}
+                          </Link>
                         );
                       })}
 
-                      <p  className="block px-4 py-2 text-sm text-gray-700" onClick={()=>logout()}>Sign Out</p>
+                      <p
+                        className="block px-4 py-2 text-sm text-gray-700"
+                        onClick={() => logout()}
+                      >
+                        Sign Out
+                      </p>
                     </>
                   ) : (
                     <>
-                      {navItemLogOut.map((data) => {
+                      {navItemLogOut.map((data, index) => {
                         return (
                           <>
                             <Link
@@ -217,6 +184,7 @@ const navigate=useNavigate();
                               role="menuitem"
                               tabIndex="-1"
                               id="user-menu-item-1"
+                              key={index}
                             >
                               {data.item}
                             </Link>
@@ -244,24 +212,6 @@ const navigate=useNavigate();
             aria-current="page"
           >
             Dashboard
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Team
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Projects
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Calendar
           </a>
         </div>
       </div>

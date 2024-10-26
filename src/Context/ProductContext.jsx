@@ -3,6 +3,7 @@ const ProductContext = createContext();
 
 function PrductContextProvider({ children }) {
   const [selectedItemInCart, setSelectedItemInCart] = useState(new Map());
+  const[totalQty,setTotalQty]=useState(0)
   const[searchInput,setSearchInput]=useState('');
   const addItemToCart = (id, product) => {
     console.log(id, product);
@@ -22,7 +23,7 @@ function PrductContextProvider({ children }) {
   },[])
 
   return (
-    <ProductContext.Provider value={{ selectedItemInCart,searchInput, addItemToCart,setSearchInput }}>
+    <ProductContext.Provider value={{ selectedItemInCart,searchInput, addItemToCart,setSearchInput,totalQty,setTotalQty }}>
       {children}
     </ProductContext.Provider>
   );
